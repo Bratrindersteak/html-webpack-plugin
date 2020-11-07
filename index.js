@@ -207,7 +207,14 @@ function hookIntoCompiler (compiler, options, plugin) {
       compilation.hooks.processAssets.tapAsync(
         {
           name: 'HtmlWebpackPlugin',
-          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS
+          stage:
+          /**
+           * Hacky intermediate solution arround the open webpack issue https://github.com/webpack/webpack/issues/11822 which does not
+           * allow to generate the HTML after the JS and CSS has been optimized
+           *
+           * This can break on any minor webpack release as it messes with the webpack internal enum values:
+          */
+          webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE + 200
         },
         /**
        * Hook into the PROCESS_ASSETS_STAGE_ADDITIONS hook
