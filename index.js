@@ -214,7 +214,7 @@ function hookIntoCompiler (compiler, options, plugin) {
            *
            * This can break on any minor webpack release as it messes with the webpack internal enum values:
           */
-          webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE + 200
+          webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_HASH + 200
         },
         /**
        * Hook into the PROCESS_ASSETS_STAGE_ADDITIONS hook
