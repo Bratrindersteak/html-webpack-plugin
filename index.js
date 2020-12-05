@@ -211,18 +211,15 @@ function hookIntoCompiler (compiler, options, plugin) {
           name: 'HtmlWebpackPlugin',
           stage:
           /**
-           * Hacky intermediate solution arround the open webpack issue https://github.com/webpack/webpack/issues/11822 which does not
-           * allow to generate the HTML after the JS and CSS has been optimized
-           *
-           * This can break on any minor webpack release as it messes with the webpack internal enum values:
-          */
-          webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_HASH + 200
+           * Generate the html after minification and dev tooling is done
+           */
+          webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE
         },
         /**
-       * Hook into the PROCESS_ASSETS_STAGE_ADDITIONS hook
-       * @param {WebpackCompilation} compilationAssets
-       * @param {(err?: Error) => void} callback
-      */
+         * Hook into the process assets hook
+         * @param {WebpackCompilation} compilationAssets
+         * @param {(err?: Error) => void} callback
+         */
         (compilationAssets, callback) => {
           // Get all entry point names for this html file
           const entryNames = Array.from(compilation.entrypoints.keys());
